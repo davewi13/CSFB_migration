@@ -1,2 +1,2 @@
-# CSFB_migration
-Code for cabbage stem flea beetle migration paper
+# CSFB migration
+This is the script to fit the models and reproduce the figures in the paper, "Temperature and time of season are the predominant drivers of cabbage stem flea beetle, Psylliodes chrysocephala, arrival at oilseed rape crops". For GDPR reasons the data that is provided is the processed data where the data from the CSFB traps and the corresponding weather data from the Irriguide model have already been matched up and saved a single file. The code to produce the map in Fig 1 is also not provided.
