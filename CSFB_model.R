@@ -18,6 +18,7 @@ library(brms)
 library(tidybayes)
 library(modelr)
 library(dplyr)
+library(lubridate)
 
 ############################################################################
 ############################################################################
@@ -86,7 +87,7 @@ CSFB_dat$DOY.Sc <- CSFB_dat$DOY/365
 
 # Now fit the models
 m.full <- brm(bf(Count.per.day ~ DOY.pd.Sq.Sc + Avg.Temp.pd.Sq + DOY.pd.Sc * (Avg.Temp.per.day + Rainfall.per.day + Wind.per.day + Height) + (1 + Year||Site.Location), shape~Height), family=negbinomial, data=CSFB_dat, chains=4, cores=4)
-m.full <- add_criterion(m.full2, criterion = c("loo", "waic"))
+m.full <- add_criterion(m.full, criterion = c("loo", "waic"))
 
 m.full.dropre <- brm(bf(Count.per.day ~ DOY.pd.Sq.Sc + Avg.Temp.pd.Sq + DOY.pd.Sc * (Avg.Temp.per.day + Rainfall.per.day + Wind.per.day + Height) + (1|Year) + (1|Site.Location), shape~Height), family=negbinomial, data=CSFB_dat, chains=4, cores=4)
 m.full.dropre <- add_criterion(m.full.dropre, criterion = c("loo", "waic"))
@@ -221,7 +222,7 @@ preddata$Date <- as.Date(preddata$DOY.pd.Sc*365, origin = "2020-01-01")
 p.sine <- ggplot(CSFB_dat, aes(x=as.Date(yday(Date), origin = "2020-01-01"), y=Avg.Temp)) +
   geom_point() +
   theme_bw(base_size=16) +
-  ylab("Temperature (C)") +
+  ylab("Temperature (\u00b0C)") +
   xlab("Date") +
   geom_line(data=preddata, aes(x=Date, y=Avg.Temp.per.day), col="blue", linewidth=1.3) +
   geom_line(data=preddata, aes(x=Date, y=Avg.Temp.per.day+3.28), col="red", linewidth=1.3) +
